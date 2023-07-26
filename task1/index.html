@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Notes App</h1>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Category</th>
+            <th>Content</th>
+            <th>Dates</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="notes-list">
+          <!-- Notes will be dynamically added here -->
+        </tbody>
+      </table>
+      <div class="note-container">
+        <input type="text" id="note-name" placeholder="Name" />
+        <select id="note-category">
+          <option value="Task">Task</option>
+          <option value="Random Thought">Random Thought</option>
+          <option value="Idea">Idea</option>
+        </select>
+
+        <textarea
+          id="note-content"
+          placeholder="Write your note here..."
+        ></textarea>
+        <button id="add-btn">Add Note</button>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
