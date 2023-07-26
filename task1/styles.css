@@ -15,20 +15,16 @@ h1 {
     text-align: center;
 }
 
-.note-container {
-    display: flex;
-}
 
 #note-name,
 #note-category {
-    flex: 1;
     margin-right: 5px;
 }
 
 #note-content {
     flex: 1;
-    height: 100px;
-    resize: none;
+    height: 100%;
+    resize:vertical;
     margin-right: 5px;
 }
 
@@ -38,14 +34,16 @@ h1 {
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    border-spacing:10px 30px;
+    border-style: none;
+    border-collapse:separate;
+    border-spacing: 0px 15px;
     margin-top: 20px;
     border-radius: 25%;
+
 }
 
 th, td {
-    border: 1px solid #a1a1a1;
+    border: 0   px solid #a1a1a1;
     padding: 8px;
     text-align: left;
 }
@@ -71,4 +69,10 @@ tr:hover {
 table img {
     max-width: 50px;
     max-height: 50px;
+}
+.note-container {
+    display: flex;
+}
+.note-container.hidden {
+    display: none;
 }

@@ -25,14 +25,14 @@
           <!-- Notes will be dynamically added here -->
         </tbody>
       </table>
-      <div class="note-container">
+      <button id="toggle-fields-btn">Create Note</button>
+      <div class="note-container" id="note-container">
         <input type="text" id="note-name" placeholder="Name" />
         <select id="note-category">
           <option value="Task">Task</option>
-          <option value="Random Thought">Random Thought</option>
+          <option value="RandomThought">Random Thought</option>
           <option value="Idea">Idea</option>
         </select>
-
         <textarea
           id="note-content"
           placeholder="Write your note here..."

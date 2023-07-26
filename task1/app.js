@@ -72,6 +72,12 @@ function editNoteRow(index, updatedNote) {
     saveNotesToLocalStorage();
 }
 
+// Function to toggle the visibility of the note container
+function toggleNoteContainer() {
+    const noteContainer = document.getElementById('note-container');
+    noteContainer.classList.toggle('hidden');
+}
+
 // Function to add a new note
 function addNote() {
     const name = document.getElementById('note-name').value.trim();
@@ -134,7 +140,17 @@ function loadNotesFromLocalStorage() {
 }
 // Array to store the notes
 let notes = [];
+
 // Load notes from local storage on page load
 loadNotesFromLocalStorage();
+
 // Add event listener for the "Add Note" button
 document.getElementById('add-btn').addEventListener('click', addNote);
+
+// Add event listener for the "Create Note" button
+document.getElementById('toggle-fields-btn').addEventListener('click', () => {
+    toggleNoteContainer();
+});
+
+// Hide the note container initially
+toggleNoteContainer();
