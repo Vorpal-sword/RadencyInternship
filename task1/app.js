@@ -4,7 +4,6 @@ const categoryImages = {
     Idea: 'img/idea.png',
 };
 
-// Function to create a new note row in the table
 function createNoteRow(note, index) {
     const notesList = document.getElementById('notes-list');
     const newRow = notesList.insertRow(-1);
@@ -44,22 +43,24 @@ function createNoteRow(note, index) {
     actionsDiv.appendChild(editButton);
     actionsDiv.appendChild(deleteButton);
     actionsCell.appendChild(actionsDiv);
+
+    const archiveButton = document.createElement("button");
+    archiveButton.textContent = "Archive";
+    archiveButton.addEventListener("click", () => archiveNote(index));
+    actionsDiv.appendChild(archiveButton);
 }
 
-// Function to add a new note row to the table
 function addNoteRow(note) {
     createNoteRow(note, notes.length - 1);
     saveNotesToLocalStorage();
 }
 
-// Function to delete a note row from the table
 function deleteNoteRow(index) {
     const notesList = document.getElementById('notes-list');
     notesList.deleteRow(index); 
     saveNotesToLocalStorage();
 }
 
-// Function to edit a note row in the table
 function editNoteRow(index, updatedNote) {
     const notesList = document.getElementById('notes-list');
     const rowToUpdate = notesList.rows[index];
@@ -72,13 +73,32 @@ function editNoteRow(index, updatedNote) {
     saveNotesToLocalStorage();
 }
 
-// Function to toggle the visibility of the note container
 function toggleNoteContainer() {
     const noteContainer = document.getElementById('note-container');
     noteContainer.classList.toggle('hidden');
 }
 
-// Function to add a new note
+function archiveNote(index) {
+    const note = notes[index];
+    archivedNotes.push(note);
+    deleteNote(index);
+    createArchivedNoteRow(note, archivedNotes.length - 1);
+    saveArchivedNotesToLocalStorage();
+  }
+
+function unarchiveNote(index) {
+    const note = archivedNotes[index];
+    notes.push(note);
+    deleteArchivedNoteRow(index);
+    addNoteRow(note);
+    saveArchivedNotesToLocalStorage();
+}
+function deleteArchivedNoteRow(index) {
+    //notes.splice(index, 1);
+    const archivedNotesList = document.getElementById('archived-notes-list');
+    archivedNotesList.deleteRow(index); 
+    saveArchivedNotesToLocalStorage();
+}
 function addNote() {
     const name = document.getElementById('note-name').value.trim();
     const categorySelect = document.getElementById('note-category');
@@ -101,13 +121,46 @@ function addNote() {
     }
 }
 
-// Function to delete a note
+function createArchivedNoteRow(note, index) {
+    const archivedNotesList = document.getElementById('archived-notes-list');
+    const newRow = archivedNotesList.insertRow(-1);
+
+    const imageCell = newRow.insertCell(0);
+    const categoryImage = document.createElement('img');
+    categoryImage.src = categoryImages[note.category];
+    imageCell.appendChild(categoryImage);
+
+    const nameCell = newRow.insertCell(1);
+    nameCell.textContent = note.name;
+
+    const createdCell = newRow.insertCell(2);
+    createdCell.textContent = new Date().toLocaleString();
+
+    const categoryCell = newRow.insertCell(3);
+    categoryCell.textContent = note.category;
+
+    const contentCell = newRow.insertCell(4);
+    contentCell.textContent = note.content;
+
+    const datesCell = newRow.insertCell(5);
+    datesCell.textContent = note.dates.join(', ');
+
+    const actionsCell = newRow.insertCell(6);
+    const unarchiveButton = document.createElement('button');
+    unarchiveButton.textContent = 'Unarchive';
+    unarchiveButton.addEventListener('click', () => unarchiveNote(index));
+
+    const actionsDiv = document.createElement('div');
+    actionsDiv.classList.add('note-actions');
+    actionsDiv.appendChild(unarchiveButton);
+    actionsCell.appendChild(actionsDiv);
+}
+
 function deleteNote(index) {
     notes.splice(index, 1);
     deleteNoteRow(index);
 }
 
-// Function to edit a note
 function editNote(index) {
     const note = notes[index];
     const updatedName = prompt('Edit name:', note.name);
@@ -122,15 +175,16 @@ function editNote(index) {
     }
 }
 
-// Helper function to clear input fields after adding a note
 function clearInputFields() {
     document.getElementById('note-name').value = '';
     document.getElementById('note-category').value = '';
     document.getElementById('note-content').value = '';
 }
+
 function saveNotesToLocalStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
+
 function loadNotesFromLocalStorage() {
     const storedNotes = localStorage.getItem('notes');
     if (storedNotes) {
@@ -138,19 +192,33 @@ function loadNotesFromLocalStorage() {
         notes.forEach((note, index) => createNoteRow(note, index));
     }
 }
-// Array to store the notes
+function saveArchivedNotesToLocalStorage() {
+    localStorage.setItem('archivedNotes', JSON.stringify(archivedNotes));
+}
+function loadArchivedNotesFromLocalStorage() {
+    const storedArchivedNotes = localStorage.getItem("archivedNotes");
+    if (storedArchivedNotes) {
+      archivedNotes = JSON.parse(storedArchivedNotes);
+      archivedNotes.forEach((note, index) => createArchivedNoteRow(note, index));
+    }
+  }
+let archivedNotes = [];
 let notes = [];
 
-// Load notes from local storage on page load
 loadNotesFromLocalStorage();
+loadArchivedNotesFromLocalStorage();
 
-// Add event listener for the "Add Note" button
+function toggleArchivedNotes() {
+    const archivedNotesSection = document.getElementById("archived-notes");
+    archivedNotesSection.classList.toggle("hidden");
+  }
+  
+document.getElementById("show-archived-notes-btn").addEventListener("click", () => {
+toggleArchivedNotes();
+});
 document.getElementById('add-btn').addEventListener('click', addNote);
-
-// Add event listener for the "Create Note" button
 document.getElementById('toggle-fields-btn').addEventListener('click', () => {
     toggleNoteContainer();
 });
 
-// Hide the note container initially
 toggleNoteContainer();

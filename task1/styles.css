@@ -76,3 +76,11 @@ table img {
 .note-container.hidden {
     display: none;
 }
+
+.archived-notes.hidden {
+    display: none;
+}
+
+#show-archived-notes-btn {
+    margin: 10px 0;
+}

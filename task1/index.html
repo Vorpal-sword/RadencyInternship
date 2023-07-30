@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +8,21 @@
   <body>
     <div class="container">
       <h1>Notes App</h1>
+      <button id="toggle-fields-btn">Create Note</button>
+      <div class="note-container hidden" id="note-container">
+        <input type="text" id="note-name" placeholder="Name" />
+        <select id="note-category">
+          <option value="Task">Task</option>
+          <option value="RandomThought">Random Thought</option>
+          <option value="Idea">Idea</option>
+        </select>
+        <textarea
+          id="note-content"
+          placeholder="Write your note here..."
+        ></textarea>
+        <button id="add-btn">Add Note</button>
+      </div>
+      <button id="show-archived-notes-btn">Show Archived Notes</button>
       <table>
         <thead>
           <tr>
@@ -21,23 +35,24 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="notes-list">
-          <!-- Notes will be dynamically added here -->
-        </tbody>
+        <tbody id="notes-list"></tbody>
       </table>
-      <button id="toggle-fields-btn">Create Note</button>
-      <div class="note-container" id="note-container">
-        <input type="text" id="note-name" placeholder="Name" />
-        <select id="note-category">
-          <option value="Task">Task</option>
-          <option value="RandomThought">Random Thought</option>
-          <option value="Idea">Idea</option>
-        </select>
-        <textarea
-          id="note-content"
-          placeholder="Write your note here..."
-        ></textarea>
-        <button id="add-btn">Add Note</button>
+      <div class="archived-notes hidden" id="archived-notes">
+        <h2>Archived Notes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Created</th>
+              <th>Category</th>
+              <th>Content</th>
+              <th>Dates</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="archived-notes-list"></tbody>
+        </table>
       </div>
     </div>
     <script src="app.js"></script>
