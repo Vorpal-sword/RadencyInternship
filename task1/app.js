@@ -83,22 +83,23 @@ function archiveNote(index) {
     archivedNotes.push(note);
     deleteNote(index);
     createArchivedNoteRow(note, archivedNotes.length - 1);
-    saveArchivedNotesToLocalStorage();
+    saveNotesToLocalStorage();
   }
 
-function unarchiveNote(index) {
+  function unarchiveNote(index) {
     const note = archivedNotes[index];
-    notes.push(note);
-    deleteArchivedNoteRow(index);
-    addNoteRow(note);
-    saveArchivedNotesToLocalStorage();
+    archivedNotes.splice(index, 1); // Remove from archivedNotes array
+    deleteArchivedNoteRow(index); // Delete from archived notes table
+    notes.push(note); // Add back to the regular notes array
+    addNoteRow(note); // Add to the regular notes table
+    saveNotesToLocalStorage(); // Save the changes to localStorage
+  }
+  function deleteArchivedNoteRow(index) {
+    const notesList = document.getElementById('archived-notes-list');
+    notesList.deleteRow(index); 
+    saveNotesToLocalStorage();
 }
-function deleteArchivedNoteRow(index) {
-    //notes.splice(index, 1);
-    const archivedNotesList = document.getElementById('archived-notes-list');
-    archivedNotesList.deleteRow(index); 
-    saveArchivedNotesToLocalStorage();
-}
+
 function addNote() {
     const name = document.getElementById('note-name').value.trim();
     const categorySelect = document.getElementById('note-category');
@@ -183,31 +184,28 @@ function clearInputFields() {
 
 function saveNotesToLocalStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem('archivedNotes', JSON.stringify(archivedNotes));
 }
 
 function loadNotesFromLocalStorage() {
+    const storedArchivedNotes = localStorage.getItem('archivedNotes');
     const storedNotes = localStorage.getItem('notes');
-    if (storedNotes) {
-        notes = JSON.parse(storedNotes);
-        notes.forEach((note, index) => createNoteRow(note, index));
-    }
-}
-function saveArchivedNotesToLocalStorage() {
-    localStorage.setItem('archivedNotes', JSON.stringify(archivedNotes));
-}
-function loadArchivedNotesFromLocalStorage() {
-    const storedArchivedNotes = localStorage.getItem("archivedNotes");
+  
     if (storedArchivedNotes) {
       archivedNotes = JSON.parse(storedArchivedNotes);
       archivedNotes.forEach((note, index) => createArchivedNoteRow(note, index));
     }
+  
+    if (storedNotes) {
+      notes = JSON.parse(storedNotes);
+      notes.forEach((note, index) => createNoteRow(note, index));
+    }
   }
+
 let archivedNotes = [];
 let notes = [];
 
 loadNotesFromLocalStorage();
-loadArchivedNotesFromLocalStorage();
-
 function toggleArchivedNotes() {
     const archivedNotesSection = document.getElementById("archived-notes");
     archivedNotesSection.classList.toggle("hidden");
