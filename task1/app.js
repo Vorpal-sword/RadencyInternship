@@ -1,3 +1,37 @@
+function updateSummaryTable() {
+    const summaryList = document.getElementById('summary-list');
+    summaryList.innerHTML = '';
+  
+    const categoryCounts = {};
+  
+    notes.forEach((note) => {
+      if (categoryCounts[note.category]) {
+        categoryCounts[note.category].active++;
+      } else {
+        categoryCounts[note.category] = { active: 1, archived: 0 };
+      }
+    });
+  
+    archivedNotes.forEach((note) => {
+      if (categoryCounts[note.category]) {
+        categoryCounts[note.category].archived++;
+      } else {
+        categoryCounts[note.category] = { active: 0, archived: 1 };
+      }
+    });
+  
+    for (const category in categoryCounts) {
+      const row = summaryList.insertRow();
+      const categoryCell = row.insertCell(0);
+      const activeCell = row.insertCell(1);
+      const archivedCell = row.insertCell(2);
+  
+      categoryCell.textContent = category;
+      activeCell.textContent = categoryCounts[category].active;
+      archivedCell.textContent = categoryCounts[category].archived;
+    }
+}
+
 const categoryImages = {
     Task: 'img/task.png',
     RandomThought: 'img/randomThought.png',
@@ -59,6 +93,8 @@ function deleteNoteRow(index) {
     const notesList = document.getElementById('notes-list');
     notesList.deleteRow(index); 
     saveNotesToLocalStorage();
+
+    updateSummaryTable();
 }
 
 function editNoteRow(index, updatedNote) {
@@ -84,6 +120,8 @@ function archiveNote(index) {
     deleteNote(index);
     createArchivedNoteRow(note, archivedNotes.length - 1);
     saveNotesToLocalStorage();
+
+    updateSummaryTable();
   }
 
   function unarchiveNote(index) {
@@ -93,6 +131,8 @@ function archiveNote(index) {
     notes.push(note); // Add back to the regular notes array
     addNoteRow(note); // Add to the regular notes table
     saveNotesToLocalStorage(); // Save the changes to localStorage
+
+    updateSummaryTable(); 
   }
   function deleteArchivedNoteRow(index) {
     const notesList = document.getElementById('archived-notes-list');
@@ -119,6 +159,8 @@ function addNote() {
         notes.push(note);
         addNoteRow(note);
         clearInputFields();
+
+        updateSummaryTable();
     }
 }
 
@@ -200,6 +242,8 @@ function loadNotesFromLocalStorage() {
       notes = JSON.parse(storedNotes);
       notes.forEach((note, index) => createNoteRow(note, index));
     }
+
+    updateSummaryTable();
   }
 
 let archivedNotes = [];
