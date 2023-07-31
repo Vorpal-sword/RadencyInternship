@@ -4,6 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
   </head>
   <body>
     <div class="container">
@@ -37,6 +41,20 @@
         </thead>
         <tbody id="notes-list"></tbody>
       </table>
+      <div class="edit-form-container hidden" id="edit-form-container">
+        <h2>Edit Note</h2>
+        <input type="text" id="edit-note-name" placeholder="Name" />
+        <select id="edit-note-category">
+          <option value="Task">Task</option>
+          <option value="RandomThought">Random Thought</option>
+          <option value="Idea">Idea</option>
+        </select>
+        <textarea
+          id="edit-note-content"
+          placeholder="Write your note here..."
+        ></textarea>
+        <button id="update-btn">Update Note</button>
+      </div>
       <div class="archived-notes hidden" id="archived-notes">
         <h2>Archived Notes</h2>
         <table>

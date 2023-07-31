@@ -15,7 +15,6 @@ h1 {
     text-align: center;
 }
 
-
 #note-name,
 #note-category {
     margin-right: 5px;
@@ -24,33 +23,48 @@ h1 {
 #note-content {
     flex: 1;
     height: 100%;
-    resize:vertical;
+    resize: vertical;
     margin-right: 5px;
 }
 
-#add-btn {
+#add-btn,
+#update-btn,
+#toggle-fields-btn,
+#show-archived-notes-btn {
     margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 8px 16px;
+    background-color: #be18ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-btn:hover,
+#update-btn:hover,
+#toggle-fields-btn:hover,
+#show-archived-notes-btn:hover {
+    background-color: #761783;
 }
 
 table {
     width: 100%;
     border-style: none;
-    border-collapse:separate;
+    border-collapse: separate;
     border-spacing: 0px 15px;
     margin-top: 20px;
     border-radius: 25%;
-
 }
 
 th, td {
-    border: 0   px solid #a1a1a1;
+    border: 0;
     padding: 8px;
     text-align: left;
 }
 
 th {
     background-color: #77777788;
-
 }
 
 tr {
@@ -70,9 +84,11 @@ table img {
     max-width: 50px;
     max-height: 50px;
 }
+
 .note-container {
     display: flex;
 }
+
 .note-container.hidden {
     display: none;
 }
@@ -84,3 +100,30 @@ table img {
 #show-archived-notes-btn {
     margin: 10px 0;
 }
+
+.edit-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#edit-note-name,
+#edit-note-category {
+    margin-right: 5px;
+}
+
+.edit-form-container.hidden {
+    display: none;
+}
+
+.edit-form-container input,
+.edit-form-container textarea,
+.edit-form-container select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#toggle-fields-btn{margin-left: 0px; }
