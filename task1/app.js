@@ -177,7 +177,6 @@ function archiveNote(index) {
     deleteNote(index);
     createArchivedNoteRow(note, archivedNotes.length - 1);
     saveNotesToLocalStorage();
-
     updateSummaryTable();
   }
 
@@ -257,7 +256,7 @@ function createArchivedNoteRow(note, index) {
 }
 
 function deleteNote(index) {
-    notes.splice(index, 1);
+    notes = [...notes.slice(0, index), ...notes.slice(index + 1)];
     deleteNoteRow(index);
 }
 
