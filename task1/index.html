@@ -1,14 +1,32 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
   </head>
   <body>
     <div class="container">
       <h1>Notes App</h1>
+      <button id="toggle-fields-btn">Create Note</button>
+      <div class="note-container hidden" id="note-container">
+        <input type="text" id="note-name" placeholder="Name" />
+        <select id="note-category">
+          <option value="Task">Task</option>
+          <option value="RandomThought">Random Thought</option>
+          <option value="Idea">Idea</option>
+        </select>
+        <textarea
+          id="note-content"
+          placeholder="Write your note here..."
+        ></textarea>
+        <button id="add-btn">Add Note</button>
+      </div>
+      <button id="show-archived-notes-btn">Show Archived Notes</button>
       <table>
         <thead>
           <tr>
@@ -21,25 +39,51 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="notes-list">
-          <!-- Notes will be dynamically added here -->
-        </tbody>
+        <tbody id="notes-list"></tbody>
       </table>
-      <div class="note-container">
-        <input type="text" id="note-name" placeholder="Name" />
-        <select id="note-category">
+      <div class="edit-form-container hidden" id="edit-form-container">
+        <h2>Edit Note</h2>
+        <input type="text" id="edit-note-name" placeholder="Name" />
+        <select id="edit-note-category">
           <option value="Task">Task</option>
-          <option value="Random Thought">Random Thought</option>
+          <option value="RandomThought">Random Thought</option>
           <option value="Idea">Idea</option>
         </select>
-
         <textarea
-          id="note-content"
+          id="edit-note-content"
           placeholder="Write your note here..."
         ></textarea>
-        <button id="add-btn">Add Note</button>
+        <button id="update-btn">Update Note</button>
       </div>
+      <div class="archived-notes hidden" id="archived-notes">
+        <h2>Archived Notes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Created</th>
+              <th>Category</th>
+              <th>Content</th>
+              <th>Dates</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="archived-notes-list"></tbody>
+        </table>
+      </div>
+      <h2>Summary</h2>
+      <table id="summary-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Active Notes</th>
+            <th>Archived Notes</th>
+          </tr>
+        </thead>
+        <tbody id="summary-list"></tbody>
+      </table>
     </div>
-    <script src="app.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>
