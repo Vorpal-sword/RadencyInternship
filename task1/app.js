@@ -39,6 +39,7 @@ const categoryImages = {
 };
 
 function createNoteRow(note, index) {
+    try {
     const notesList = document.getElementById('notes-list');
     const newRow = notesList.insertRow(-1);
 
@@ -82,7 +83,9 @@ function createNoteRow(note, index) {
     actionsDiv.appendChild(archiveButton);
     actionsDiv.appendChild(deleteButton);
     actionsCell.appendChild(actionsDiv);
-
+    } catch (error) {
+    console.error('Error creating note row:', error);
+    }
     
 }
 function showEditForm(index) {
@@ -141,16 +144,23 @@ function saveEditedNote(index) {
     }
 }
 function addNoteRow(note) {
-    createNoteRow(note, notes.length - 1);
-    saveNotesToLocalStorage();
+    try {
+        createNoteRow(note, notes.length - 1);
+        saveNotesToLocalStorage();
+    } catch (error) {
+        console.error('Error adding note row:', error);
+    }
 }
 
 function deleteNoteRow(index) {
-    const notesList = document.getElementById('notes-list');
-    notesList.deleteRow(index); 
-    saveNotesToLocalStorage();
-
-    updateSummaryTable();
+    try {
+        const notesList = document.getElementById('notes-list');
+        notesList.deleteRow(index);
+        saveNotesToLocalStorage();
+        updateSummaryTable();
+    } catch (error) {
+        console.error('Error deleting note row:', error);
+    }
 }
 
 function editNoteRow(index, updatedNote) {
@@ -281,12 +291,16 @@ function clearInputFields() {
 }
 
 function saveNotesToLocalStorage() {
+    try {
     localStorage.setItem('notes', JSON.stringify(notes));
     localStorage.setItem('archivedNotes', JSON.stringify(archivedNotes));
+    } catch (error) {
+        console.error('Error saving notes to local storage:', error);
+    }
 }
 
 function loadNotesFromLocalStorage() {
-    const storedArchivedNotes = localStorage.getItem('archivedNotes');
+    try {const storedArchivedNotes = localStorage.getItem('archivedNotes');
     const storedNotes = localStorage.getItem('notes');
   
     if (storedArchivedNotes) {
@@ -300,7 +314,10 @@ function loadNotesFromLocalStorage() {
     }
 
     updateSummaryTable();
-  }
+    } catch (error) {
+        console.error('Error loading notes from local storage:', error);
+    }
+}
 
 let archivedNotes = [];
 let notes = [];
