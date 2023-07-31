@@ -1,34 +1,30 @@
 function updateSummaryTable() {
     const summaryList = document.getElementById('summary-list');
     summaryList.innerHTML = '';
-  
     const categoryCounts = {};
-  
-    notes.forEach((note) => {
-      if (categoryCounts[note.category]) {
-        categoryCounts[note.category].active++;
-      } else {
-        categoryCounts[note.category] = { active: 1, archived: 0 };
-      }
+    notes.map((note) => note.category).forEach((category) => {
+        if (categoryCounts[category]) {
+            categoryCounts[category].active++;
+        } else {
+            categoryCounts[category] = { active: 1, archived: 0 };
+        }
     });
-  
-    archivedNotes.forEach((note) => {
-      if (categoryCounts[note.category]) {
-        categoryCounts[note.category].archived++;
-      } else {
-        categoryCounts[note.category] = { active: 0, archived: 1 };
-      }
+    archivedNotes.map((note) => note.category).forEach((category) => {
+        if (categoryCounts[category]) {
+            categoryCounts[category].archived++;
+        } else {
+            categoryCounts[category] = { active: 0, archived: 1 };
+        }
     });
-  
     for (const category in categoryCounts) {
-      const row = summaryList.insertRow();
-      const categoryCell = row.insertCell(0);
-      const activeCell = row.insertCell(1);
-      const archivedCell = row.insertCell(2);
-  
-      categoryCell.textContent = category;
-      activeCell.textContent = categoryCounts[category].active;
-      archivedCell.textContent = categoryCounts[category].archived;
+        const row = summaryList.insertRow();
+        const categoryCell = row.insertCell(0);
+        const activeCell = row.insertCell(1);
+        const archivedCell = row.insertCell(2);
+
+        categoryCell.textContent = category;
+        activeCell.textContent = categoryCounts[category].active;
+        archivedCell.textContent = categoryCounts[category].archived;
     }
 }
 
@@ -270,19 +266,6 @@ function deleteNote(index) {
     deleteNoteRow(index);
 }
 
-function editNote(index) {
-    const note = notes[index];
-    const updatedName = prompt('Edit name:', note.name);
-    const updatedCategory = prompt('Edit category:', note.category);
-    const updatedContent = prompt('Edit content:', note.content);
-    if (updatedName !== null && updatedCategory !== null && updatedContent !== null) {
-        note.name = updatedName.trim();
-        note.category = updatedCategory.trim();
-        note.content = updatedContent.trim();
-        note.dates.push(new Date().toLocaleDateString());
-        editNoteRow(index, note);
-    }
-}
 
 function clearInputFields() {
     document.getElementById('note-name').value = '';
@@ -318,6 +301,7 @@ function loadNotesFromLocalStorage() {
         console.error('Error loading notes from local storage:', error);
     }
 }
+
 
 let archivedNotes = [];
 let notes = [];
